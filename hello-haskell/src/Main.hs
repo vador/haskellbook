@@ -2,7 +2,6 @@ module Main where
 
 import Hello
 
-may = sayHello
-
-
+main :: IO ()
+main = sayHello
 

@@ -13,7 +13,7 @@ name:                hello-haskell
 version:             0.1.0.0
 
 -- A short (one-line) description of the package.
--- synopsis:            
+-- synopsis:            Hello World in Haskell
 
 -- A longer description of the package.
 -- description:         
@@ -64,4 +64,5 @@ executable hello-haskell
   
   -- Base language which the package is written in.
   default-language:    Haskell2010
-  
+  ghc-options: -Wall -fwarn-tabs
+
