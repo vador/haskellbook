@@ -22,7 +22,7 @@ renderPuzzleChar (Just c) = c
 
 allWords :: IO WordList
 allWords = do
-  dict <- readFile "../data/dict.txt"
+  dict <- readFile "data/dict.txt"
   return (lines dict)
   
 minWordLength :: Int

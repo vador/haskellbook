@@ -13,7 +13,7 @@ maintainer:          vador@grabeuh.com
 -- copyright:           
 category:            Game
 build-type:          Simple
--- extra-source-files:  
+extra-source-files:  data/dict.txt
 cabal-version:       >=1.10
 
 executable hangman
