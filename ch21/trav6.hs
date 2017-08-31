@@ -1,46 +1,45 @@
-module Travers4 where
+module Travers6 where
 
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
 
-data Three a b c =
-  Three a b c
+data Pair a b=
+  Pair a b
   deriving (Eq, Ord, Show)
 
   
-instance (Arbitrary a, Arbitrary b, Arbitrary c) =>
-         Arbitrary (Three a b c) where
+instance (Arbitrary a, Arbitrary b) =>
+         Arbitrary (Pair a b) where
   arbitrary  = do
     a <- arbitrary
     b <- arbitrary
-    c <- arbitrary
-    return $ Three a b c
+    return $ Pair a b
 
-instance (Eq a, Eq b, Eq c) => EqProp (Three a b c) where
+instance (Eq a, Eq b) => EqProp (Pair a b) where
   (=-=) = eq
 
-instance (Monoid a, Monoid b, Monoid c) => Monoid (Three a b c) where
-  mempty = Three mempty mempty mempty
-  mappend (Three a1 b1 c1) (Three a2 b2 c2) =
-    Three (mappend a1 a2) (mappend b1 b2) (mappend c1 c2)
+instance (Monoid a, Monoid b) => Monoid (Pair a b) where
+  mempty = Pair mempty mempty
+  mappend (Pair a1 b1) (Pair a2 b2) =
+    Pair (mappend a1 a2) (mappend b1 b2)
 
-instance Functor (Three a b) where
-  fmap f (Three a b c) = Three a b (f c)
+instance Functor (Pair a) where
+  fmap f (Pair a b) = Pair a (f b)
 
-instance (Monoid a, Monoid b) => Applicative (Three a b) where
-  pure = Three mempty mempty
-  (<*>) (Three a1 b1 f) (Three a2 b2 c) =
-    Three (mappend a1 a2) (mappend  b1 b2) (f c)
+instance (Monoid a) => Applicative (Pair a) where
+  pure = Pair mempty
+  (<*>) (Pair a1 f) (Pair a2 b) =
+    Pair (mappend a1 a2) (f b)
 
-instance Foldable (Three a b) where
-  foldMap f (Three a b c) = f c
+instance Foldable (Pair a) where
+  foldMap f (Pair a b) = f b
 
-instance Traversable (Three a b) where
-  traverse f (Three a b c) = (Three a b) <$> f c
+instance Traversable (Pair a) where
+  traverse f (Pair a b) = (Pair a) <$> f b
 
 main = do
-  let trigger :: Three (String, String, [String])  (String, String, [String])  (String, String, [String]) 
+  let trigger :: Pair (String, String, [String])  (String, String, [String])
       trigger = undefined
   quickBatch (functor trigger)
   quickBatch (applicative trigger)
